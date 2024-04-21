@@ -156,3 +156,132 @@ public class main {
                     int lessonIdToRemove = scanner.nextInt();
                     removeStudentFromLesson(students, lessons, studentIdToRemove, lessonIdToRemove);
                     break;
+                    case 7:
+                    System.out.print("Enter student ID to edit: "); // شناسه دانشجو برای ویرایش را وارد کنید:
+                    int studentIdToEdit = scanner.nextInt();
+                    editStudentDetails(students, studentIdToEdit);
+                    break;
+
+                case 8:
+                    System.out.print("Enter lesson ID to edit: "); // شناسه درس برای ویرایش را وارد کنید:
+                    int lessonIdToEdit = scanner.nextInt();
+                    editLessonDetails(lessons, lessonIdToEdit);
+                    break;
+
+                case 9:
+                    System.out.print("Enter student ID to delete: "); // شناسه دانشجو برای حذف را وارد کنید:
+                    int studentIdToDelete = scanner.nextInt();
+                    deleteStudent(students, lessons, studentIdToDelete);
+                    break;
+
+                case 10:
+                    System.out.print("Enter lesson ID to delete: "); // شناسه درس برای حذف را وارد کنید:
+                    int lessonIdToDelete = scanner.nextInt();
+                    deleteLesson(lessons, students, lessonIdToDelete);
+                    break;
+
+                default:
+                    System.out.println("Invalid option. Please choose again."); // گزینه نامعتبر. لطفا دوباره انتخاب کنید.
+                    break;
+            }
+        }
+    }
+
+    public static void addStudentToLesson(ArrayList<Student> students, ArrayList<Lesson> lessons, int studentId, int lessonId) {
+        for (Student student : students) {
+            if (student.id == studentId) {
+                for (Lesson lesson : lessons) {
+                    if (lesson.id == lessonId) {
+                        lesson.studentIds.add(studentId);
+                        student.lessonIds.add(lessonId);
+                        System.out.println("Student added to lesson successfully."); // دانشجو با موفقیت به درس اضافه شد.
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("Student or lesson not found."); // دانشجو یا درس یافت نشد.
+    }
+
+    public static void removeStudentFromLesson(ArrayList<Student> students, ArrayList<Lesson> lessons, int studentId, int lessonId) {
+        for (Student student : students) {
+            if (student.id == studentId) {
+                for (Lesson lesson : lessons) {
+                    if (lesson.id == lessonId) {
+                        lesson.studentIds.remove((Integer) studentId);
+                        student.lessonIds.remove((Integer) lessonId);
+                        System.out.println("Student removed from lesson successfully."); // دانشجو با موفقیت از درس حذف شد.
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("Student or lesson not found."); // دانشجو یا درس یافت نشد.
+    }
+
+    public static void editStudentDetails(ArrayList<Student> students, int studentId) {
+        for (Student student : students) {
+            if (student.id == studentId) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Enter new first name: "); // نام جدید را وارد کنید:
+                student.firstName = scanner.next();
+                System.out.print("Enter new last name: "); // نام خانوادگی جدید را وارد کنید:
+                student.lastName = scanner.next();
+                System.out.print("Enter new gender (m/f): "); // جنسیت جدید را وارد کنید (m/f):
+                student.gender = scanner.next().charAt(0);
+                System.out.print("Enter new date of birth (dd/mm/yyyy): "); // تاریخ تولد جدید را وارد کنید (dd/mm/yyyy):
+                student.dob = scanner.next();
+                System.out.println("Student details updated successfully."); // جزئیات دانشجو با موفقیت به روز شد.
+                return;
+            }
+        }
+        System.out.println("Student not found."); // دانشجو یافت نشد.
+    }
+
+    public static void editLessonDetails(ArrayList<Lesson> lessons, int lessonId) {
+        // Add logic to edit lesson details
+        for (Lesson lesson : lessons) {
+            if (lesson.id == lessonId) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Enter new lesson name: "); // نام درس جدید را وارد کنید:
+                lesson.lessonName = scanner.next();
+                System.out.print("Enter new teacher name: "); // نام معلم جدید را وارد کنید:
+                lesson.teacherName = scanner.next();
+                System.out.print("Enter new start time: "); // زمان شروع جدید را وارد کنید:
+                lesson.startTime = scanner.next();
+                System.out.println("Lesson details updated successfully."); // جزئیات درس با موفقیت به روز شد.
+                return;
+            }
+        }
+        System.out.println("Lesson not found."); // درس یافت نشد.
+    }
+
+    public static void deleteStudent(ArrayList<Student> students, ArrayList<Lesson> lessons, int studentId) {
+        for (Student student : students) {
+            if (student.id == studentId) {
+                students.remove(student);
+                for (Lesson lesson : lessons) {
+                    lesson.studentIds.remove((Integer) studentId);
+                }
+                System.out.println("Student deleted successfully."); // دانشجو با موفقیت حذف شد.
+                return;
+            }
+        }
+        System.out.println("Student not found."); // دانشجو یافت نشد.
+    }
+
+    public static void deleteLesson(ArrayList<Lesson> lessons, ArrayList<Student> students, int lessonId) {
+        for (Lesson lesson : lessons) {
+            if (lesson.id == lessonId) {
+                lessons.remove(lesson);
+                for (Student student : students) {
+                    student.lessonIds.remove((Integer) lessonId);
+                }
+                System.out.println("Lesson deleted successfully."); // درس با موفقیت حذف شد.
+                return;
+            }
+        }
+        System.out.println("Lesson not found."); // درس یافت نشد.
+    }
+}
+
