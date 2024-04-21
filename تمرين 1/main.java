@@ -94,3 +94,65 @@ public class main {
                     String dob = scanner.next();
                     students.add(new Student(id, firstName, lastName, gender, dob));
                     break;
+                    case 2:
+                    System.out.println("Enter lesson details:"); // وارد کردن جزئیات درس
+                    System.out.print("Lesson ID (up to 5 digits): "); // شناسه درس (حداکثر 5 رقم):
+                    int lessonId = scanner.nextInt();
+                    while (String.valueOf(lessonId).length() > 5) {
+                        System.out.println("Lesson ID must be up to 5 digits. Please re-enter:"); // شناسه درس باید حداکثر 5 رقم باشد. لطفا مجددا وارد کنید:
+                        lessonId = scanner.nextInt();
+                    }
+                    System.out.print("Lesson Name: "); // نام درس:
+                    String lessonName = scanner.next();
+                    System.out.print("Teacher Name: "); // نام معلم:
+                    String teacherName = scanner.next();
+                    System.out.print("Start Time: "); // زمان شروع:
+                    String startTime = scanner.next();
+                    lessons.add(new Lesson(lessonId, lessonName, teacherName, startTime));
+                    break;
+
+                case 3:
+                    System.out.println("Students:"); // دانشجویان:
+                    for (Student student : students) {
+                        student.displayDetails(lessons);
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Lessons:"); // دروس:
+                    for (Lesson lesson : lessons) {
+                        System.out.println("ID: " + lesson.id);
+                        System.out.println("Lesson Name: " + lesson.lessonName);
+                        System.out.println("Teacher Name: " + lesson.teacherName);
+                        System.out.println("Start Time: " + lesson.startTime);
+                        if (lesson.studentIds.isEmpty()) {
+                            System.out.println("No students enrolled in this lesson."); // هیچ دانشجویی در این درس ثبت نام نشده است.
+                        } else {
+                            System.out.println("Students enrolled:"); // دانشجویان ثبت نام شده:
+                            for (int studentId : lesson.studentIds) {
+                                for (Student student : students) {
+                                    if (student.id == studentId) {
+                                        System.out.println("- " + student.firstName + " " + student.lastName);
+                                    }
+                                }
+                            }
+                        }
+                        System.out.println();
+                    }
+                    break;
+
+                case 5:
+                    System.out.print("Enter student ID: "); // شناسه دانشجو را وارد کنید:
+                    int studentIdToAdd = scanner.nextInt();
+                    System.out.print("Enter lesson ID: "); // شناسه درس را وارد کنید:
+                    int lessonIdToAdd = scanner.nextInt();
+                    addStudentToLesson(students, lessons, studentIdToAdd, lessonIdToAdd);
+                    break;
+
+                case 6:
+                    System.out.print("Enter student ID: "); // شناسه دانشجو را وارد کنید:
+                    int studentIdToRemove = scanner.nextInt();
+                    System.out.print("Enter lesson ID: "); // شناسه درس را وارد کنید:
+                    int lessonIdToRemove = scanner.nextInt();
+                    removeStudentFromLesson(students, lessons, studentIdToRemove, lessonIdToRemove);
+                    break;
